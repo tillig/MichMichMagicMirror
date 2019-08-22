@@ -1,0 +1,110 @@
+{
+  "env": {
+    "amd": true,
+    "browser": true,
+    "es6": true,
+    "jquery": true,
+    "node": true,
+    "worker": true
+  },
+  "rules": {
+    "accessor-pairs": 0,
+    "block-scoped-var": 0,
+    "comma-dangle": 1,
+    "complexity": [
+      0,
+      11
+    ],
+    "consistent-return": 0,
+    "curly": [
+      0,
+      "all"
+    ],
+    "default-case": 0,
+    "dot-location": 0,
+    "dot-notation": [
+      0,
+      {
+        "allowKeywords": true
+      }
+    ],
+    "eqeqeq": 0,
+    "guard-for-in": 0,
+    "indent": ["error", 2],
+    "no-alert": 0,
+    "no-caller": 0,
+    "no-case-declarations": 0,
+    "no-console": 0,
+    "no-debugger": 1,
+    "no-div-regex": 0,
+    "no-else-return": 0,
+    "no-empty-pattern": 0,
+    "no-eq-null": 0,
+    "no-eval": 0,
+    "no-extend-native": 0,
+    "no-extra-bind": 0,
+    "no-extra-parens": 1,
+    "no-extra-semi": 1,
+    "no-fallthrough": 2,
+    "no-floating-decimal": 0,
+    "no-implicit-coercion": 0,
+    "no-implied-eval": 0,
+    "no-invalid-this": 0,
+    "no-irregular-whitespace": 0,
+    "no-iterator": 0,
+    "no-labels": 0,
+    "no-lone-blocks": 0,
+    "no-loop-func": 0,
+    "no-magic-numbers": 0,
+    "no-multi-spaces": 0,
+    "no-multi-str": 0,
+    "no-native-reassign": 0,
+    "no-new": 0,
+    "no-new-func": 0,
+    "no-new-wrappers": 0,
+    "no-octal": 2,
+    "no-octal-escape": 0,
+    "no-param-reassign": 0,
+    "no-process-env": 0,
+    "no-proto": 0,
+    "no-redeclare": 2,
+    "no-return-assign": 0,
+    "no-script-url": 0,
+    "no-self-compare": 0,
+    "no-sequences": 0,
+    "no-throw-literal": 0,
+    "no-undef": 0,
+    "no-unused-expressions": 0,
+    "no-unused-vars": 0,
+    "no-useless-call": 0,
+    "no-useless-concat": 0,
+    "no-void": 0,
+    "no-warning-comments": [
+      0,
+      {
+        "location": "start",
+        "terms": [
+          "todo",
+          "fixme",
+          "xxx"
+        ]
+      }
+    ],
+    "no-with": 0,
+    "radix": 0,
+    "semi": 1,
+    "semi-spacing": 1,
+    "valid-jsdoc": [
+      2,
+      {
+        "requireReturn": false
+      }
+    ],
+    "vars-on-top": 0,
+    "wrap-iife": 0,
+    "yoda": [
+      0,
+      "never"
+    ]
+  }
+}
