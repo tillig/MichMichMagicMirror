@@ -5,7 +5,7 @@ var config = {
   ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1"],
   language: "en",
   timeFormat: 24,
-  units: "metric",
+  units: "imperial",
 
   modules: [
     {
@@ -77,7 +77,7 @@ if (!process.env.OPENWEATHER_API_KEY) {
 } else {
   var owApiKey = process.env.OPENWEATHER_API_KEY;
   console.log("Updating modules that require the OPENWEATHER_API_KEY.");
-  config.modules.forEach(function(mmModule) {
+  config.modules.forEach(function (mmModule) {
     if (mmModule.config && mmModule.config.appid == "OPENWEATHER_API_KEY") {
       console.log("- " + mmModule.module);
       mmModule.config.appid = owApiKey;
