@@ -1,7 +1,19 @@
-﻿var remote = null;
+﻿const owApiKeyName = "OPENWEATHER_API_KEY";
+var remote = null;
 if (typeof window !== "undefined") {
   remote = window.require("electron").remote;
 }
+
+var readEnvironment = function (name) {
+  if (typeof process !== "undefined" && process.env[name]) {
+    // process is undefined in the Electron app.
+    return process.env[name];
+  }
+  if (remote && remote.process.env[name]) {
+    // remote is null if the Electron nodeIntegration value isn't set to true.
+    return remote.process.env[name];
+  }
+};
 
 var config = {
   address: "localhost",
@@ -45,22 +57,25 @@ var config = {
       position: "lower_third"
     },
     {
+      // ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
       module: "currentweather",
       position: "top_right",
       config: {
         location: "Hillsboro",
-        locationID: "5731371", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-        appid: "OPENWEATHER_API_KEY"
+        locationID: "5731371",
+        appid: owApiKeyName
       }
     },
     {
+      // ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
       module: "weatherforecast",
       position: "top_right",
       header: "Weather Forecast",
       config: {
         location: "Hillsboro",
-        locationID: "5731371", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-        appid: "OPENWEATHER_API_KEY"
+        locationID: "5731371",
+        appid: owApiKeyName,
+        forecastEndpoint: "forecast"
       }
     },
     {
@@ -80,26 +95,13 @@ var config = {
   ]
 };
 
-// Replace the environment secrets - this doesn't seem to work if
-// you just call it inline in the JSON.
-var owApiKey = null;
-if (typeof process !== "undefined" && process.env.OPENWEATHER_API_KEY)
-{
-  // process is undefined in the Electron app.
-  owApiKey = process.env.OPENWEATHER_API_KEY;
-}
-if (remote && remote.process.env.OPENWEATHER_API_KEY)
-{
-  // remote is null if the Electron nodeIntegration value isn't set to true.
-  owApiKey = remote.process.env.OPENWEATHER_API_KEY;
-}
-
+var owApiKey = readEnvironment(owApiKeyName);
 if (!owApiKey) {
-  console.log("You must define the OPENWEATHER_API_KEY environment variable for weather support.");
+  console.log("You must define the " + owApiKeyName + " environment variable for weather support.");
 } else {
-  console.log("Updating modules that require the OPENWEATHER_API_KEY.");
+  console.log("Updating modules that require " + owApiKeyName + ".");
   config.modules.forEach(function (mmModule) {
-    if (mmModule.config && mmModule.config.appid == "OPENWEATHER_API_KEY") {
+    if (mmModule.config && mmModule.config.appid == owApiKeyName) {
       console.log("- " + mmModule.module);
       mmModule.config.appid = owApiKey;
     }
