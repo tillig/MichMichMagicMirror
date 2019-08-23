@@ -1,4 +1,8 @@
-﻿
+﻿var remote = null;
+if (typeof window !== "undefined") {
+  remote = window.require("electron").remote;
+}
+
 var config = {
   address: "localhost",
   port: 8080,
@@ -6,6 +10,12 @@ var config = {
   language: "en",
   timeFormat: 24,
   units: "imperial",
+
+  electronOptions: {
+    webPreferences: {
+      nodeIntegration: true
+    }
+  },
 
   modules: [
     {
@@ -72,10 +82,21 @@ var config = {
 
 // Replace the environment secrets - this doesn't seem to work if
 // you just call it inline in the JSON.
-if (!process.env.OPENWEATHER_API_KEY) {
-  console.log("You must define the OPENWEATHER_API_KEY for weather support.");
+var owApiKey = null;
+if (typeof process !== "undefined" && process.env.OPENWEATHER_API_KEY)
+{
+  // process is undefined in the Electron app.
+  owApiKey = process.env.OPENWEATHER_API_KEY;
+}
+if (remote && remote.process.env.OPENWEATHER_API_KEY)
+{
+  // remote is null if the Electron nodeIntegration value isn't set to true.
+  owApiKey = remote.process.env.OPENWEATHER_API_KEY;
+}
+
+if (!owApiKey) {
+  console.log("You must define the OPENWEATHER_API_KEY environment variable for weather support.");
 } else {
-  var owApiKey = process.env.OPENWEATHER_API_KEY;
   console.log("Updating modules that require the OPENWEATHER_API_KEY.");
   config.modules.forEach(function (mmModule) {
     if (mmModule.config && mmModule.config.appid == "OPENWEATHER_API_KEY") {
