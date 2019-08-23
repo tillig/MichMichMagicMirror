@@ -63,7 +63,7 @@ var config = {
       config: {
         location: "Hillsboro",
         locationID: "5731371",
-        appid: owApiKeyName
+        appid: readEnvironment(owApiKeyName)
       }
     },
     {
@@ -74,7 +74,7 @@ var config = {
       config: {
         location: "Hillsboro",
         locationID: "5731371",
-        appid: owApiKeyName,
+        appid: readEnvironment(owApiKeyName),
         forecastEndpoint: "forecast"
       }
     },
@@ -94,19 +94,6 @@ var config = {
     }
   ]
 };
-
-var owApiKey = readEnvironment(owApiKeyName);
-if (!owApiKey) {
-  console.log("You must define the " + owApiKeyName + " environment variable for weather support.");
-} else {
-  console.log("Updating modules that require " + owApiKeyName + ".");
-  config.modules.forEach(function (mmModule) {
-    if (mmModule.config && mmModule.config.appid == owApiKeyName) {
-      console.log("- " + mmModule.module);
-      mmModule.config.appid = owApiKey;
-    }
-  });
-}
 
 /*************** DO NOT EDIT THE LINE BELOW ***************/
 if (typeof module !== "undefined") {
