@@ -1,18 +1,11 @@
 ﻿const owApiKeyName = "OPENWEATHER_API_KEY";
-var remote = null;
-if (typeof window !== "undefined") {
-  remote = window.require("electron").remote;
-}
 
 var readEnvironment = function (name) {
   if (typeof process !== "undefined" && process.env[name]) {
-    // process is undefined in the Electron app.
+    // Process is undefined in the Electron app.
     return process.env[name];
   }
-  if (remote && remote.process.env[name]) {
-    // remote is null if the Electron nodeIntegration value isn't set to true.
-    return remote.process.env[name];
-  }
+  console.log("Unable to find " + name + " in environment. Functionality may be missing.");
 };
 
 var config = {
@@ -22,12 +15,6 @@ var config = {
   language: "en",
   timeFormat: 24,
   units: "imperial",
-
-  electronOptions: {
-    webPreferences: {
-      nodeIntegration: true
-    }
-  },
 
   modules: [
     {
