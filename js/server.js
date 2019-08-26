@@ -57,16 +57,15 @@ var Server = function(config, callback) {
 		res.send(config);
 	});
 
+	app.get("/config-module/config.js", function (req, res) {
+		var moduleConfig = "var config = " + JSON.stringify(config) + ";";
+		moduleConfig += "if (typeof module !== \"undefined\") { module.exports = config; }";
+		res.type("text/javascript").send(moduleConfig);
+	});
+
 	app.get("/", function(req, res) {
 		var html = fs.readFileSync(path.resolve(global.root_path + "/index.html"), {encoding: "utf8"});
 		html = html.replace("#VERSION#", global.version);
-
-		configFile = "config/config.js";
-		if (typeof(global.configuration_file) !== "undefined") {
-		    configFile = global.configuration_file;
-		}
-		html = html.replace("#CONFIG_FILE#", configFile);
-
 		res.send(html);
 	});
 
